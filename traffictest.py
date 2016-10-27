@@ -17,13 +17,13 @@ masterList=[]
 #For loop to seach through xml for 'item' then get the time and address, and append to traffic array
 for channel in root.iter('item'):
     time = channel.find('pubDate').text
-    address = channel.find('description').text
-    #time = re.split() regex code to filter 'address and data after that' from description
+    description = channel.find('description').text
+    addressFilter = re.compile(r'Address:(.+?)<br />', flags=re.DOTALL)
+    address = addressFilter.findall(description)
     newTraffic.append([time, address])
-#print(newtraffic[0].find("address", "<"))
 
-#verbose output of data
-print(newTraffic)
+#verbose output of new data
+#print(newTraffic)
 #Append deletes previous data, so you can merge the new data with the master list
 masterList = masterList + newTraffic
-#print(masterList)
+print(masterList)
